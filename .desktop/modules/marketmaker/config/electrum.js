@@ -10,7 +10,7 @@ let electrumServers = {
         ],
     },
     BTC: {
-        port: 50001,
+        port: 10000,
         proto: 'tcp',
         txfee: 10000,
         coin: 'BTC',

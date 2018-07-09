@@ -15,7 +15,7 @@ let electrumServers = {
             'electrum1.cipig.net',
             'electrum2.cipig.net'
         ],
-        port: 50001,
+        port: 10000,
         proto: 'tcp',
         txfee: 10000,
     },
