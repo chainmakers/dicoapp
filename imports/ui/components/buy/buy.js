@@ -118,7 +118,13 @@ Template.buy.helpers({
     },
     ready: function () {
         //Session.get("ready");
-        return Tradedata.findOne({ key: "priceKMD" }) && Tradedata.findOne({ key: "priceKMD" }).price / numcoin > 0 && Tradedata.findOne({ key: "priceBTC" }) && Tradedata.findOne({ key: "priceBTC" }).price / numcoin > 0;//&& Tradedata.findOne({key:"priceLTC"}) && Tradedata.findOne({key:"priceLTC"}).price/numcoin > 0;
+        return 
+        Tradedata.findOne({ key: "priceKMD" }) && 
+        Tradedata.findOne({ key: "priceKMD" }).price / numcoin > 0 && 
+        Tradedata.findOne({ key: "priceBTC" }) && 
+        Tradedata.findOne({ key: "priceBTC" }).price / numcoin > 0 && 
+        Tradedata.findOne({ key: "priceLTC" }) && 
+        Tradedata.findOne({ key: "priceLTC" }).price / numcoin > 0;
     },
     pricemongokmd: function () {
         return Tradedata.findOne({ key: "priceKMD" }).price / numcoin;
@@ -316,7 +322,7 @@ Template.buy.events({
                 });
 
             }
-        } /*else if (Number(Userdata.findOne({
+        } else if (Number(Userdata.findOne({
                 coin: "LTC"
             }).balance) > ((amount / numcoin * Tradedata.findOne({
                 key: "priceLTC"
@@ -350,7 +356,7 @@ Template.buy.events({
                     }
                 });
             }
-        }*/ else {
+         } else {
             console.log("error");
             swal("Oops!", "Not enough balance or wrong buy amount!", "error");
         }
