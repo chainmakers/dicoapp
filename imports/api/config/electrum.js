@@ -1,35 +1,44 @@
-let electrumServers = { //by default KMD, BTC and LTC supported
+let electrumServers = {
     KMD: {
-        address: '46.4.87.18',
         port: 10001,
         proto: 'tcp',
         txfee: 0,
         coin: 'KMD',
-        altserverList: [
-            'electrum1.cipig.net',
-            'electrum2.cipig.net'
+        serverList: [
+            'electrum2.cipig.net',
+            '46.4.87.18'
         ],
     },
     BTC: {
-        address: 'electrum.hsmiths.com',
         port: 50001,
         proto: 'tcp',
         txfee: 10000,
         coin: 'BTC',
-        altserverList: [
+        serverList: [
             'helicarrier.bauerj.eu'
         ],
     },
-    dICOtoken: {
-        address: '0.0.0.0',
-        port: 0,
+    ZEC: {
+        port: 50001,
         proto: 'tcp',
         txfee: 10000,
-        coin: 'dICOtoken',
-        altserverList: [
-            'electrum1.cipig.net', //alternative spv - needs to be same port
-            'electrum2.cipig.net'
+        coin: 'ZEC',
+        serverList: [
+            'helicarrier.bauerj.eu',
+            'node1.komodo.rocks',
+            'electrum.hsmiths.com',
+            'electrum.bntn.host'
         ],
+    },
+    dICOtoken: {
+        coin: 'GLXT',
+        serverList: [
+            'electrum1.glx.co',
+            'electrum2.glx.co'
+        ],
+        port: 60012,
+        proto: 'tcp',
+        txfee: 10000
     }
 };
 

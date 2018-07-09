@@ -25,7 +25,7 @@ meteortesting:mocha               # A package for writing and running your meteo
 johanbrook:publication-collector  # Test a Meteor publication by collecting its output
 ostrio:meteor-root
 froatsnook:sleep
-session@1.1.7
+session
 ca333:qrcode
 twbs:bootstrap
 omega:meteor-desktop-watcher@=0.18.1

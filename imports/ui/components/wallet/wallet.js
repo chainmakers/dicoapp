@@ -4,7 +4,7 @@ import Clipboard from 'clipboard';
 import './wallet.html';
 import { Userdata } from '/imports/api/userdata/userdata.js';
 import { Transactions } from '/imports/api/transactions/transactions.js';
-import tokenconfig from '/imports/api/config/electrum.js';
+import tokenconfig from '/imports/api/config/tokenconfig.js';
 
 const numcoin = 100000000;
 
@@ -41,7 +41,7 @@ Template.wallet.helpers({
     //return Session.get("activeAddressButton");
   },
   coins: function(){
-     return ["KMD", tokenconfig.dICOtoken.shortcode, "LTC", "BTC"];
+     return ["KMD", tokenconfig.dICOtoken.shortcode, "BTC"];
   },
   currentcoin: function(){
    return Session.get("currentcoin");
@@ -51,9 +51,7 @@ Template.wallet.helpers({
       return "Komodo";
     } else if (Session.get("currentcoin") == tokenconfig.dICOtoken.shortcode) {
       return tokenconfig.dICOtoken.name;
-    } else if (Session.get("currentcoin") == "LTC") {
-      return "Litecoin";
-    }else if (Session.get("currentcoin") == "BTC") {
+    } else if (Session.get("currentcoin") == "BTC") {
       return "Bitcoin";
     }
   },
@@ -65,9 +63,6 @@ Template.wallet.helpers({
   },
   balancedICOT: function(){
       return Userdata.findOne({coin:tokenconfig.dICOtoken.shortcode}) && parseFloat(Userdata.findOne({coin:tokenconfig.dICOtoken.shortcode}).balance/numcoin).toFixed(8);
-  },
-  balanceLTC: function(){
-      return Userdata.findOne({coin:"LTC"}) && parseFloat(Userdata.findOne({coin:"LTC"}).balance/numcoin).toFixed(8);
   },
   dICOTName: function(){
     return tokenconfig.dICOtoken.shortcode;
@@ -90,13 +85,6 @@ Template.wallet.helpers({
   },
   activecoindICOT: function(){
     if (Session.get("coin") == tokenconfig.dICOtoken.shortcode) {
-      return true;
-    } else {
-      return false;
-    }
-  },
-  activecoinLTC: function(){
-    if (Session.get("coin") == "LTC") {
       return true;
     } else {
       return false;

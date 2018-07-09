@@ -170,11 +170,11 @@ export default class Marketmaker {
             //     price: Number(0) * numcoin,
             //     createdAt: new Date()
             // });
-            await this.Tradedata.insert({
-                key: "priceLTC",
-                price: Number(0) * numcoin,
-                createdAt: new Date()
-            });
+            // await this.Tradedata.insert({
+            //     key: "priceLTC",
+            //     price: Number(0) * numcoin,
+            //     createdAt: new Date()
+            // });
         }
 
         if (await this.Userdata.count() === 0) {
@@ -197,12 +197,12 @@ export default class Marketmaker {
                     smartaddress: "addr",
                     createdAt: new Date()
                 },
-                {
-                    coin: "LTC",
-                    balance: Number(0) * numcoin,
-                    smartaddress: "addr",
-                    createdAt: new Date()
-                },
+                // {
+                //     coin: "LTC",
+                //     balance: Number(0) * numcoin,
+                //     smartaddress: "addr",
+                //     createdAt: new Date()
+                // },
             ];
 
             await Promise.all(data.map(coin => this.Userdata.insert(coin)));
@@ -549,10 +549,10 @@ export default class Marketmaker {
         if (await this.Userdata.count() > 4) {
             await this.getBalance(tokenconfig.dICOtoken.shortcode);
             await this.getBalance('KMD');
-            await this.getBalance('LTC');
+            //await this.getBalance('LTC');
             //await this.getBalance('LTC');
             await this.getPrice('KMD');
-            await this.getPrice('LTC');
+            //await this.getPrice('LTC');
             //await this.getPrice('LTC');
         }
         //console.log("connected");
@@ -723,7 +723,7 @@ export default class Marketmaker {
             'userpass': userpass,
             'method': 'electrum',
             'coin': tokenconfig.dICOtoken.shortcode,
-            'ipaddr': electrumServers.dICOtoken.,
+            'ipaddr': electrumServers.dICOtoken.address,
             'port': electrumServers.dICOtoken.port
         };
 
@@ -751,23 +751,23 @@ export default class Marketmaker {
         //     'port': 10000
         // };
 
-        const paramsLTC = {
-            'userpass': userpass,
-            'method': 'electrum',
-            'coin': 'LTC',
-            'ipaddr': 'electrum1.cipig.net',
-            'port': 10065
-        };
+        // const paramsLTC = {
+        //     'userpass': userpass,
+        //     'method': 'electrum',
+        //     'coin': 'LTC',
+        //     'ipaddr': 'electrum1.cipig.net',
+        //     'port': 10065
+        // };
+        //
+        // const paramsLTC2 = {
+        //     'userpass': userpass,
+        //     'method': 'electrum',
+        //     'coin': 'LTC',
+        //     'ipaddr': 'electrum2.cipig.net',
+        //     'port': 10065
+        // };
 
-        const paramsLTC2 = {
-            'userpass': userpass,
-            'method': 'electrum',
-            'coin': 'LTC',
-            'ipaddr': 'electrum2.cipig.net',
-            'port': 10065
-        };
-
-        const toSend = [paramsKMD, paramsKMD2, paramsLTC, paramsLTC2 paramsdICOT, paramsdICOT2];
+        const toSend = [paramsKMD, paramsKMD2, paramsdICOT, paramsdICOT2];
 
         for (let i = 0; i < toSend.length; i++) {
             try {

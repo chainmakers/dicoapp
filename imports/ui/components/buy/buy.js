@@ -18,7 +18,7 @@ Template.buy.onCreated(function () {
 function init() {
     try{
         Session.set("pricekmd", Tradedata.findOne({key:"priceKMD"}).price/numcoin);
-        Session.set("priceltc", Tradedata.findOne({key:"priceLTC"}).price/numcoin);
+        //Session.set("priceltc", Tradedata.findOne({key:"priceLTC"}).price/numcoin);
         Session.set("pricebtc", Tradedata.findOne({key:"priceBTC"}).price/numcoin);
         // if(Tradedata.findOne({key:"priceKMD"}).price/numcoin > 0){
         //   Session.set("ready", true);
@@ -29,7 +29,7 @@ function init() {
     catch(e){
         Session.set("ready", false);
         Session.set("pricekmd", "NaN");
-        Session.set("priceltc", "NaN");
+        //Session.set("priceltc", "NaN");
         Session.set("pricebtc", "NaN");
     }
 
@@ -63,7 +63,7 @@ Template.buy.helpers({
     //return Session.get("activeAddressButton");
   },
   coins: function(){
-     return ["KMD", "LTC", "BTC"];
+     return ["KMD", "BTC"];
   },
   currentcoin: function(){
    return Session.get("currentcoin");
@@ -79,9 +79,6 @@ Template.buy.helpers({
   },
   dICOTName: function(){
     return tokenconfig.dICOtoken.shortcode;
-  },
-  balanceLTC: function(){
-      return Userdata.findOne({coin:"LTC"}) && parseFloat(Userdata.findOne({coin:"LTC"}).balance/numcoin).toFixed(8);
   },
   balanceBTC: function(){
       return Userdata.findOne({coin:"BTC"}) && parseFloat(Userdata.findOne({coin:"BTC"}).balance/numcoin).toFixed(8);
@@ -103,13 +100,6 @@ Template.buy.helpers({
       return false;
     }
   },
-  activecoinLTC: function(){
-    if (Session.get("coin") == "LTC") {
-      return true;
-    } else {
-      return false;
-    }
-  },
   activecoinBTC: function(){
     if (Session.get("coin") == "BTC") {
       return true;
@@ -120,15 +110,12 @@ Template.buy.helpers({
   pricekmd: function(){
       return Tradedata.findOne({key:"priceKMD"}) && Tradedata.findOne({key:"priceKMD"}).price/numcoin;
   },
-  priceltc: function(){
-      return Tradedata.findOne({key:"priceLTC"}) && Tradedata.findOne({key:"priceLTC"}).price/numcoin;
-  },
   pricebtc: function(){
       return Tradedata.findOne({key:"priceBTC"}) && Tradedata.findOne({key:"priceBTC"}).price/numcoin;
   },
   ready: function() {
     //Session.get("ready");
-    return Tradedata.findOne({key:"priceKMD"}) && Tradedata.findOne({key:"priceKMD"}).price/numcoin > 0 && Tradedata.findOne({key:"priceBTC"}) && Tradedata.findOne({key:"priceBTC"}).price/numcoin > 0 && Tradedata.findOne({key:"priceLTC"}) && Tradedata.findOne({key:"priceLTC"}).price/numcoin > 0;
+    return Tradedata.findOne({key:"priceKMD"}) && Tradedata.findOne({key:"priceKMD"}).price/numcoin > 0 && Tradedata.findOne({key:"priceBTC"}) && Tradedata.findOne({key:"priceBTC"}).price/numcoin > 0 ;//&& Tradedata.findOne({key:"priceLTC"}) && Tradedata.findOne({key:"priceLTC"}).price/numcoin > 0;
   },
   pricemongokmd: function(){
     return Tradedata.findOne({key:"priceKMD"}).price/numcoin;
@@ -326,7 +313,7 @@ Template.buy.events({
                 });
 
             }
-        } else if (Number(Userdata.findOne({
+        } /*else if (Number(Userdata.findOne({
                 coin: "LTC"
             }).balance) > ((amount / numcoin * Tradedata.findOne({
                 key: "priceLTC"
@@ -360,7 +347,7 @@ Template.buy.events({
                     }
                 });
             }
-        } else {
+        }*/ else {
             console.log("error");
             swal("Oops!", "Not enough balance or wrong buy amount!", "error");
         }

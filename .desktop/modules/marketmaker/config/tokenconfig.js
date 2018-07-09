@@ -1,9 +1,9 @@
-let tokenconfig = { //custom token config
+let tokenconfig = {
     dICOtoken: {
-        name: 'Equaliser',
-        shortcode: 'EQL',
-        siteurl: 'https://www.dicotoken.com',
-        supporturl: 'https://helpdesk.dicotoken.com',
+        name: 'GLX Token',
+        shortcode: 'GLXT',
+        siteurl: 'https://glx.co',
+        supporturl: 'https://glx.co',
         pricebob: '0x_pubkey_bob',
         netid: 0,
         seed: '0.0.0.0'

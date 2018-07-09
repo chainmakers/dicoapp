@@ -31,11 +31,11 @@ Meteor.methods({
                 price: Number(0) * numcoin,
                 createdAt: new Date()
             });
-            Tradedata.insert({
-                key: "priceLTC",
-                price: Number(0) * numcoin,
-                createdAt: new Date()
-            });
+            // Tradedata.insert({
+            //     key: "priceLTC",
+            //     price: Number(0) * numcoin,
+            //     createdAt: new Date()
+            // });
             Tradedata.insert({
                 key: "priceBTC",
                 price: Number(0) * numcoin,
@@ -43,12 +43,13 @@ Meteor.methods({
             });
         }
         if (Userdata.find().count() === 0) {
-            const data = [{
-                    coin: "LTC",
-                    balance: Number(0) * numcoin,
-                    smartaddress: "addr",
-                    createdAt: new Date()
-                },
+            const data = [
+            //    {
+            //         coin: "LTC",
+            //         balance: Number(0) * numcoin,
+            //         smartaddress: "addr",
+            //         createdAt: new Date()
+            //     },
                 {
                     coin: "KMD",
                     balance: Number(0) * numcoin,
@@ -138,16 +139,18 @@ Meteor.methods({
             'method': 'passphrase',
             'passphrase': passphrase,
             'gui': 'dICOApp',
-            'netid': tokenconfig.dICOtoken.netid,
-            'seednode': tokenconfig.dICOtoken.seed
+            'netid': tokenconfig.dICOtoken.netid
+            // 'seednode': tokenconfig.dICOtoken.seed
         };
 
-        Meteor.sleep(6000);
+        Meteor.sleep(8000);
         try {
             console.log("ISSUING login call");
             const result = HTTP.call('POST', 'http://127.0.0.1:7783', {
                 data: setparams
             });
+
+            console.log("return data: " + result.content)
 
             console.log("login result: " + result);
             var userpass = JSON.parse(result.content).userpass;
@@ -201,13 +204,14 @@ Meteor.methods({
         }
 
         console.log("adding electrum servers");
+
         const paramsKMD = {
             'userpass': Userdata.findOne({
                 key: "userpass"
             }).userpass.toString(),
             'method': 'electrum',
             'coin': 'KMD',
-            'ipaddr': electrumServers.KMD.altserverList[0],
+            'ipaddr': electrumServers.KMD.serverList[0],
             'port': electrumServers.KMD.port
         };
 
@@ -217,7 +221,7 @@ Meteor.methods({
             }).userpass.toString(),
             'method': 'electrum',
             'coin': 'KMD',
-            'ipaddr': electrumServers.KMD.address,
+            'ipaddr': electrumServers.KMD.serverList[1],
             'port': electrumServers.KMD.port
         };
 
@@ -227,7 +231,7 @@ Meteor.methods({
             }).userpass.toString(),
             'method': 'electrum',
             'coin': tokenconfig.dICOtoken.shortcode,
-            'ipaddr': electrumServers.dICOtoken.address,
+            'ipaddr': electrumServers.dICOtoken.serverList[0],
             'port': electrumServers.dICOtoken.port
         };
 
@@ -237,7 +241,7 @@ Meteor.methods({
             }).userpass.toString(),
             'method': 'electrum',
             'coin': tokenconfig.dICOtoken.shortcode,
-            'ipaddr': electrumServers.dICOtoken.altserverList[0],
+            'ipaddr': electrumServers.dICOtoken.serverList[1],
             'port': electrumServers.dICOtoken.port
         };
 
@@ -247,7 +251,7 @@ Meteor.methods({
             }).userpass.toString(),
             'method': 'electrum',
             'coin': 'BTC',
-            'ipaddr': electrumServers.BTC.address,
+            'ipaddr': electrumServers.BTC.serverList[0],
             'port': electrumServers.BTC.port
         };
 
@@ -257,38 +261,38 @@ Meteor.methods({
             }).userpass.toString(),
             'method': 'electrum',
             'coin': 'BTC',
-            'ipaddr': electrumServers.BTC.altserverList[0],
+            'ipaddr': electrumServers.BTC.serverList[1],
             'port': electrumServers.BTC.port
         };
 
-        const paramsLTC = {
-            'userpass': Userdata.findOne({
-                key: "userpass"
-            }).userpass.toString(),
-            'method': 'electrum',
-            'coin': 'LTC',
-            'ipaddr': 'electrum1.cipig.net',
-            'port': 10065
-        };
+        // const paramsLTC = {
+        //     'userpass': Userdata.findOne({
+        //         key: "userpass"
+        //     }).userpass.toString(),
+        //     'method': 'electrum',
+        //     'coin': 'LTC',
+        //     'ipaddr': 'electrum1.cipig.net',
+        //     'port': 10065
+        // };
+        //
+        // const paramsLTC2 = {
+        //     'userpass': Userdata.findOne({
+        //         key: "userpass"
+        //     }).userpass.toString(),
+        //     'method': 'electrum',
+        //     'coin': 'LTC',
+        //     'ipaddr': 'electrum2.cipig.net',
+        //     'port': 10065
+        // };
 
-        const paramsLTC2 = {
-            'userpass': Userdata.findOne({
-                key: "userpass"
-            }).userpass.toString(),
-            'method': 'electrum',
-            'coin': 'LTC',
-            'ipaddr': 'electrum2.cipig.net',
-            'port': 10065
-        };
-
-        const toSend = [paramsKMD, paramsKMD2, paramsBTC, paramsBTC2, paramsdICOT, paramsdICOT2, paramsLTC, paramsLTC2];
+        const toSend = [paramsKMD, paramsKMD2, paramsBTC, paramsdICOT, paramsdICOT2];
 
         for (let i = 0; i < toSend.length; i++) {
                   try {
                       const result = HTTP.call('POST', 'http://127.0.0.1:7783', {
                           data: toSend[i]
                       });
-                      //console.log(result);
+                      console.log(i + "<<<<<<<<<<<<<<<<<<<<<<<< " + result);
                   } catch (e) {
                       throw new Meteor.Error(e);
                   }
@@ -297,9 +301,9 @@ Meteor.methods({
 
         if (Userdata.find().count() > 4) {
             Meteor.call('getbalance', 'KMD');
-            Meteor.call('getbalance', tokenconfig.dICOtoken.shortcode);
+            Meteor.call('getbalance', 'GLXT');
             Meteor.call('getbalance', 'BTC');
-            Meteor.call('getbalance', 'LTC');
+            //Meteor.call('getbalance', 'LTC');
         }
         console.log("connected");
     },
@@ -475,7 +479,7 @@ Meteor.methods({
                 key: "userpass"
             }).userpass,
             'method': 'orderbook',
-            'base': "OOT",
+            'base': tokenconfig.dICOtoken.shortcode,
             'rel': paycoin
         }
         var bestprice = 0;
@@ -604,14 +608,11 @@ Meteor.methods({
             const result = HTTP.call('POST', 'http://127.0.0.1:7783', {
                 data: balanceparams
             });
+            console.log(result.content);
             try {
-                Userdata.update({
-                    coin: coin
-                }, {
-                    $set: {
-                        balance: (Number(JSON.parse(result.content).balance) * numcoin)
-                    }
-                });
+                Userdata.update({ coin: coin }, {
+                $set: { balance: (Number(JSON.parse(result.content).balance) * numcoin) }
+            });
             } catch (e) {
                 throw new Meteor.Error(e);
             }
@@ -759,11 +760,11 @@ Meteor.methods({
         }
     },
     checkswapstatus(requestid, quoteid) {
-        console.log("call checkswapstatus");
+        console.log("call checkswapstatus: " + requestid + "." + quoteid );
         if (Userdata.findOne({
                 key: "userpass"
             })) {
-            if (requestid == "" && quoteid == "" || requestid == null && quoteid == null) {
+            if ((requestid == "" && quoteid == "") || (requestid == null && quoteid == null)) {
                 const swaplist = {
                     'userpass': Userdata.findOne({
                         key: "userpass"

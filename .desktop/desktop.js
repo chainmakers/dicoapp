@@ -189,12 +189,10 @@ export default class Desktop {
                 console.log('getBalance timer');
                 await this.modules['marketmaker'].getBalance(tokenconfig.dICOtoken.shortcode);
                 await this.modules['marketmaker'].getBalance('KMD');
-                await this.modules['marketmaker'].getBalance('LTC');
                 //await this.modules['marketmaker'].getBalance('LTC');
             }
             if(await Userdata.count() > 4 && await Tradedata.count() > 0) {
                 await this.modules['marketmaker'].getPrice('KMD');
-                await this.modules['marketmaker'].getPrice('LTC');
                 //await this.modules['marketmaker'].getPrice('LTC');
                 await this.modules['marketmaker'].checkSwapStatus();
             }
@@ -214,7 +212,6 @@ export default class Desktop {
                 await this.modules['marketmaker'].listTransactions("KMD");
                 await this.modules['marketmaker'].listTransactions(tokenconfig.dICOtoken.shortcode);
                 //await this.modules['marketmaker'].listTransactions("LTC");
-                await this.modules['marketmaker'].listTransactions("LTC");
             }
 
         }, 90000);
