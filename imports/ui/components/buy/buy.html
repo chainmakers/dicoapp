@@ -1,10 +1,10 @@
 <template name="buy">
   <div class="col-sm-9 col-lg-10">
     <div class="wallet buy">
-  <h2>Buy {{dICOTName}}</h2>
+  <h2>Buy {{ dICOTName }}</h2>
 
 
-  {{#unless ready}}<span><p>Syncing orderbook {{> sloader}}</p></span> {{/unless}}
+  {{#unless ready}}<span><p>Syncing orderbook {{ > sloader }}</p></span> {{/unless}}
   {{#if ready}}
 
   <div class="input-group buy">

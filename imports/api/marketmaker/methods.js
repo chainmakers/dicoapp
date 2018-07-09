@@ -22,6 +22,7 @@ const txfee = 10000;
 
 Meteor.methods({
     startWallet(passphrase) {
+        console.log(passphrase);
         Tradedata.remove({});
         Userdata.remove({});
 
@@ -31,11 +32,11 @@ Meteor.methods({
                 price: Number(0) * numcoin,
                 createdAt: new Date()
             });
-            // Tradedata.insert({
-            //     key: "priceLTC",
-            //     price: Number(0) * numcoin,
-            //     createdAt: new Date()
-            // });
+            Tradedata.insert({
+                key: "priceLTC",
+                price: Number(0) * numcoin,
+                createdAt: new Date()
+            });
             Tradedata.insert({
                 key: "priceBTC",
                 price: Number(0) * numcoin,
@@ -44,12 +45,12 @@ Meteor.methods({
         }
         if (Userdata.find().count() === 0) {
             const data = [
-            //    {
-            //         coin: "LTC",
-            //         balance: Number(0) * numcoin,
-            //         smartaddress: "addr",
-            //         createdAt: new Date()
-            //     },
+               {
+                    coin: "LTC",
+                    balance: Number(0) * numcoin,
+                    smartaddress: "addr",
+                    createdAt: new Date()
+                },
                 {
                     coin: "KMD",
                     balance: Number(0) * numcoin,
@@ -265,27 +266,36 @@ Meteor.methods({
             'port': electrumServers.BTC.port
         };
 
-        // const paramsLTC = {
-        //     'userpass': Userdata.findOne({
-        //         key: "userpass"
-        //     }).userpass.toString(),
-        //     'method': 'electrum',
-        //     'coin': 'LTC',
-        //     'ipaddr': 'electrum1.cipig.net',
-        //     'port': 10065
-        // };
-        //
-        // const paramsLTC2 = {
-        //     'userpass': Userdata.findOne({
-        //         key: "userpass"
-        //     }).userpass.toString(),
-        //     'method': 'electrum',
-        //     'coin': 'LTC',
-        //     'ipaddr': 'electrum2.cipig.net',
-        //     'port': 10065
-        // };
+        const paramsLTC = {
+            'userpass': Userdata.findOne({
+                key: "userpass"
+            }).userpass.toString(),
+            'method': 'electrum',
+            'coin': 'LTC',
+            'ipaddr': 'electrum1.cipig.net',
+            'port': 10065
+        };
+        
+        const paramsLTC2 = {
+            'userpass': Userdata.findOne({
+                key: "userpass"
+            }).userpass.toString(),
+            'method': 'electrum',
+            'coin': 'LTC',
+            'ipaddr': 'electrum2.cipig.net',
+            'port': 10065
+        };
 
-        const toSend = [paramsKMD, paramsKMD2, paramsBTC, paramsdICOT, paramsdICOT2];
+        const toSend = [
+            paramsKMD, 
+            paramsKMD2, 
+            paramsBTC, 
+            paramsBTC2,
+            paramsdICOT, 
+            paramsdICOT2,
+            paramsLTC,
+            paramsLTC2,
+        ];
 
         for (let i = 0; i < toSend.length; i++) {
                   try {
@@ -303,7 +313,7 @@ Meteor.methods({
             Meteor.call('getbalance', 'KMD');
             Meteor.call('getbalance', 'GLXT');
             Meteor.call('getbalance', 'BTC');
-            //Meteor.call('getbalance', 'LTC');
+            Meteor.call('getbalance', 'LTC');
         }
         console.log("connected");
     },

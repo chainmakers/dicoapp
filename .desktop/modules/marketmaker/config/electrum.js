@@ -30,6 +30,17 @@ let electrumServers = {
             'electrum.bntn.host'
         ],
     },
+    LTC: {
+        coin: 'LTC',
+        serverList: [
+            'electrum1.cipig.net',
+            'electrum2.cipig.net',
+            'electrum3.cipig.net',
+        ],
+        port: 10065,
+        proto: 'tcp',
+        txfee: 0,
+    },
     dICOtoken: {
         coin: 'GLXT',
         serverList: [

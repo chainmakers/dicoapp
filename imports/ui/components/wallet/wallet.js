@@ -13,7 +13,7 @@ Template.wallet.onCreated(function () {
       Meteor.subscribe('userdata.all');
       Meteor.subscribe('transactions.all');
   }
-  Session.set("currentcoin", "KMD");
+  Session.set("currentcoin", "BTC");
 });
 
 Template.wallet.onRendered(function() {
@@ -41,7 +41,7 @@ Template.wallet.helpers({
     //return Session.get("activeAddressButton");
   },
   coins: function(){
-     return ["KMD", tokenconfig.dICOtoken.shortcode, "BTC"];
+     return ["BTC", "LTC", "KMD", tokenconfig.dICOtoken.shortcode,];
   },
   currentcoin: function(){
    return Session.get("currentcoin");
@@ -53,22 +53,27 @@ Template.wallet.helpers({
       return tokenconfig.dICOtoken.name;
     } else if (Session.get("currentcoin") == "BTC") {
       return "Bitcoin";
+    } else if (Session.get("currentcoin") == "LTC") {
+      return "Litecoin";
     }
   },
   balance: function(){
-      return Userdata.findOne({coin:Session.get("coin")}) && parseFloat(Userdata.findOne({coin:Session.get("coin")}).balance/numcoin).toFixed(8);
+    return Userdata.findOne({coin:Session.get("coin")}) && parseFloat(Userdata.findOne({coin:Session.get("coin")}).balance/numcoin).toFixed(8);
   },
   balanceKMD: function(){
-      return Userdata.findOne({coin:"KMD"}) && parseFloat(Userdata.findOne({coin:"KMD"}).balance/numcoin).toFixed(8);
+    return Userdata.findOne({coin:"KMD"}) && parseFloat(Userdata.findOne({coin:"KMD"}).balance/numcoin).toFixed(8);
   },
   balancedICOT: function(){
-      return Userdata.findOne({coin:tokenconfig.dICOtoken.shortcode}) && parseFloat(Userdata.findOne({coin:tokenconfig.dICOtoken.shortcode}).balance/numcoin).toFixed(8);
+    return Userdata.findOne({coin:tokenconfig.dICOtoken.shortcode}) && parseFloat(Userdata.findOne({coin:tokenconfig.dICOtoken.shortcode}).balance/numcoin).toFixed(8);
+  },
+  balanceBTC: function(){
+    return Userdata.findOne({coin:"BTC"}) && parseFloat(Userdata.findOne({coin:"BTC"}).balance/numcoin).toFixed(8);
+  },
+  balanceLTC: function(){
+    return Userdata.findOne({coin:"LTC"}) && parseFloat(Userdata.findOne({coin:"LTC"}).balance/numcoin).toFixed(8);
   },
   dICOTName: function(){
     return tokenconfig.dICOtoken.shortcode;
-  },
-  balanceBTC: function(){
-      return Userdata.findOne({coin:"BTC"}) && parseFloat(Userdata.findOne({coin:"BTC"}).balance/numcoin).toFixed(8);
   },
   address: function(){
     return Userdata.findOne({coin:Session.get("currentcoin")}) && Userdata.findOne({coin:Session.get("currentcoin")}).smartaddress.toString();
@@ -97,6 +102,13 @@ Template.wallet.helpers({
       return false;
     }
   },
+  activecoinLTC: function(){
+    if (Session.get("coin") == "LTC") {
+      return true;
+    } else {
+      return false;
+    }
+  },
   price: function(){
     if(Session.get("price")==0){
       return NaN;
@@ -109,7 +121,7 @@ Template.wallet.helpers({
     return Session.get("price"); //* Session.get("buyamount")/numcoin;
   },
   swaps: function(){
-    //return SwapData.find({}, {sort: {sorttime: -1}});
+    return SwapData.find({}, {sort: {sorttime: -1}});
   },
   sendDisabled: () => {
     return Session.get("sendInProgress") === 'yes';

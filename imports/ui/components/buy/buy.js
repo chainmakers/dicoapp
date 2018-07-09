@@ -75,10 +75,10 @@ Template.buy.helpers({
       return Userdata.findOne({coin:"KMD"}) && parseFloat(Userdata.findOne({coin:"KMD"}).balance/numcoin).toFixed(8);
   },
   balancedICOT: function(){
-      return Userdata.findOne({coin:tokenconfig.dICOtoken.shortcode}) && parseFloat(Userdata.findOne({coin:tokenconfig.dICOtoken.shortcode}).balance/numcoin).toFixed(8);
+      return Userdata.findOne({coin:tokenconfig.dICOtoken.coin}) && parseFloat(Userdata.findOne({coin:tokenconfig.dICOtoken.coin}).balance/numcoin).toFixed(8);
   },
   dICOTName: function(){
-    return tokenconfig.dICOtoken.shortcode;
+    return tokenconfig.dICOtoken.coin;
   },
   balanceBTC: function(){
       return Userdata.findOne({coin:"BTC"}) && parseFloat(Userdata.findOne({coin:"BTC"}).balance/numcoin).toFixed(8);
@@ -94,7 +94,7 @@ Template.buy.helpers({
     }
   },
   activecoindICOT: function(){
-    if (Session.get("coin") == tokenconfig.dICOtoken.shortcode) {
+    if (Session.get("coin") == tokenconfig.dICOtoken.coin) {
       return true;
     } else {
       return false;
