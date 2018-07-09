@@ -15,7 +15,8 @@ let electrumServers = {
         txfee: 10000,
         coin: 'BTC',
         serverList: [
-            'helicarrier.bauerj.eu'
+            'electrum1.cipig.net',
+            'electrum2.cipig.net'
         ],
     },
     ZEC: {

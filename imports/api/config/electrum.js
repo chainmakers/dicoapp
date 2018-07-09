@@ -12,7 +12,8 @@ let electrumServers = {
     BTC: {
         coin: 'BTC',
         serverList: [
-            'helicarrier.bauerj.eu'
+            'electrum1.cipig.net',
+            'electrum2.cipig.net'
         ],
         port: 50001,
         proto: 'tcp',
