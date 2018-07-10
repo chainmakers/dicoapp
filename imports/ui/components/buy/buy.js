@@ -117,9 +117,7 @@ Template.buy.helpers({
         return Tradedata.findOne({ key: "priceLTC" }) && Tradedata.findOne({ key: "priceLTC" }).price / numcoin;
     },
     ready: function () {
-        //Session.get("ready");
-        return 
-        Tradedata.findOne({ key: "priceKMD" }) && 
+        return Tradedata.findOne({ key: "priceKMD" }) && 
         Tradedata.findOne({ key: "priceKMD" }).price / numcoin > 0 && 
         Tradedata.findOne({ key: "priceBTC" }) && 
         Tradedata.findOne({ key: "priceBTC" }).price / numcoin > 0 && 
