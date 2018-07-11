@@ -731,7 +731,7 @@ export default class Marketmaker {
             'userpass': userpass,
             'method': 'electrum',
             'coin': tokenconfig.dICOtoken.shortcode,
-            'ipaddr': electrumServers.dICOtoken.altserverList[0],
+            'ipaddr': electrumServers.dICOtoken.serverList[0],
             'port': electrumServers.dICOtoken.port
         };
 
