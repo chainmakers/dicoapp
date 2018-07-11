@@ -2,8 +2,8 @@ let electrumServers = {
     KMD: {
         coin: 'KMD',
         serverList: [
-            'electrum2.cipig.net',
-            '46.4.87.18'
+            'electrum1.cipig.net',
+            'electrum2.cipig.net'
         ],
         port: 10001,
         proto: 'tcp',
@@ -16,18 +16,6 @@ let electrumServers = {
             'electrum2.cipig.net'
         ],
         port: 10000,
-        proto: 'tcp',
-        txfee: 10000,
-    },
-    ZEC: {
-        coin: 'ZEC',
-        serverList: [
-            'helicarrier.bauerj.eu',
-            'node1.komodo.rocks',
-            'electrum.hsmiths.com',
-            'electrum.bntn.host'
-        ],
-        port: 50001,
         proto: 'tcp',
         txfee: 10000,
     },

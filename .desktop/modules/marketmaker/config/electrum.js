@@ -5,8 +5,8 @@ let electrumServers = {
         txfee: 0,
         coin: 'KMD',
         serverList: [
-            'electrum2.cipig.net',
-            'electrum1.cipig.net'
+            'electrum1.cipig.net',
+            'electrum2.cipig.net'
         ],
     },
     BTC: {
