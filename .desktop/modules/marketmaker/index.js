@@ -715,7 +715,7 @@ export default class Marketmaker {
             'userpass': userpass,
             'method': 'electrum',
             'coin': 'KMD',
-            'ipaddr': electrum2.cipig.net,
+            'ipaddr': 'electrum2.cipig.net',
             'port': 10001
         };
 
