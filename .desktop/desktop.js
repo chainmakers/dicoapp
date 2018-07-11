@@ -4,6 +4,7 @@ import { app, dialog, Menu } from 'electron';
 import { exec } from 'child_process';
 import os from 'os';
 import spawn from 'cross-spawn';
+import tokenconfig from './modules/marketmaker/config/tokenconfig';
 
 process.traceDeprecation = true;
 
