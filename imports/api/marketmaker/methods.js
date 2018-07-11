@@ -22,7 +22,6 @@ const txfee = 10000;
 
 Meteor.methods({
     startWallet(passphrase) {
-        console.log(passphrase);
         Tradedata.remove({});
         Userdata.remove({});
 

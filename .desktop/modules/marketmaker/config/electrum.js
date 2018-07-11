@@ -6,7 +6,7 @@ let electrumServers = {
         coin: 'KMD',
         serverList: [
             'electrum2.cipig.net',
-            '46.4.87.18'
+            'electrum1.cipig.net'
         ],
     },
     BTC: {
@@ -17,18 +17,6 @@ let electrumServers = {
         serverList: [
             'electrum1.cipig.net',
             'electrum2.cipig.net'
-        ],
-    },
-    ZEC: {
-        port: 50001,
-        proto: 'tcp',
-        txfee: 10000,
-        coin: 'ZEC',
-        serverList: [
-            'helicarrier.bauerj.eu',
-            'node1.komodo.rocks',
-            'electrum.hsmiths.com',
-            'electrum.bntn.host'
         ],
     },
     LTC: {
