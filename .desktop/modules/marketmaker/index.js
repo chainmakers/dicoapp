@@ -756,7 +756,7 @@ export default class Marketmaker {
             'method': 'electrum',
             'coin': 'BTC',
             'ipaddr': 'electrum1.cipig.net',
-            'port': 10001
+            'port': 10000
         };
 
         const paramsBTC2 = {
@@ -764,7 +764,7 @@ export default class Marketmaker {
             'method': 'electrum',
             'coin': 'BTC',
             'ipaddr': 'electrum2.cipig.net',
-            'port': 10001
+            'port': 10000
         };
 
         const paramsLTC = {
