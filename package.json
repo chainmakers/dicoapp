@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "BLOC_prototype01",
+=======
+  "name": "dICOApp",
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
   "private": true,
   "scripts": {
     "start": "meteor run",

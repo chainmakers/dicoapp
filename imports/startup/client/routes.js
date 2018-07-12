@@ -1,6 +1,10 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
+<<<<<<< HEAD
+=======
+// get layout template and UI views
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
 import '../../ui/layouts/body/body.js';
 import '../../ui/pages/home/home.js';
 import '../../ui/pages/seed/seed.js';
@@ -9,6 +13,10 @@ import '../../ui/pages/wallet/wallet.js';
 import '../../ui/pages/help/help.js';
 import '../../ui/pages/not-found/not-found.js';
 
+<<<<<<< HEAD
+=======
+// log in route
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
 FlowRouter.route('/', {
   name: 'App.home',
   action() {
@@ -23,6 +31,10 @@ FlowRouter.route('/seed', {
   },
 });
 
+<<<<<<< HEAD
+=======
+// wallet
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
 FlowRouter.route('/wallet', {
   name: 'App.wallet',
   action() {
@@ -30,6 +42,10 @@ FlowRouter.route('/wallet', {
   },
 });
 
+<<<<<<< HEAD
+=======
+// buy
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
 FlowRouter.route('/buy', {
   name: 'App.buy',
   action() {
@@ -37,6 +53,10 @@ FlowRouter.route('/buy', {
   },
 });
 
+<<<<<<< HEAD
+=======
+// help
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
 FlowRouter.route('/help', {
   name: 'App.help',
   action() {

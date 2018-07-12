@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+// Tests for the links publications
+//
+// https://guide.meteor.com/testing.html
+
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
 import { assert } from 'chai';
 import { Swapdata } from '../swapdata.js';
 import { PublicationCollector } from 'meteor/johanbrook:publication-collector';

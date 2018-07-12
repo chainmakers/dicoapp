@@ -4,7 +4,11 @@ import { Userdata } from '../../api/userdata/userdata.js';
 import { Tradedata } from '../../api/tradedata/tradedata.js';
 import { Swapdata } from '../../api/swapdata/swapdata.js';
 import electrumServers from '../../api/config/electrum.js';
+<<<<<<< HEAD
 import tokenconfig from '../../api/config/electrum.js';
+=======
+import tokenconfig from '../../api/config/tokenconfig.js';
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
 import wordlist from '../../api/config/wordlist.js';
 import { Transactions } from '../../api/transactions/transactions.js';
 import { sleep } from 'meteor/froatsnook:sleep';
@@ -73,6 +77,10 @@ Meteor.methods({
         }
 
         if (os.platform() === 'darwin') {
+<<<<<<< HEAD
+=======
+            //fixPath();
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
             marketmakerBin = Meteor.rootPath + '/../../../../../private/static/OSX/marketmaker';
             marketmakerDir = `${process.env.HOME}/Library/Application Support/marketmaker`;
         } else if (os.platform() === 'linux') {
@@ -92,6 +100,10 @@ Meteor.methods({
 
         var coinFile = 'static/config/coins.json';
         coindata = JSON.parse(Assets.getText(coinFile));
+<<<<<<< HEAD
+=======
+        console.log("starting MM...")
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
         const startparams = {
             'gui': 'dICOApp',
             'client': 1,
@@ -103,14 +115,22 @@ Meteor.methods({
 
         let params = JSON.stringify(startparams);
         let home = process.env.HOME;
+<<<<<<< HEAD
         params = `'${params}'`;
 
         pm2.connect(true, function(err) {
+=======
+
+        params = `'${params}'`;
+
+        pm2.connect(true, function(err) { //start up pm2 god
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
             if (err) {
                 console.error(err);
                 process.exit(2);
             }
         });
+<<<<<<< HEAD
         Meteor.sleep(2000);
         try {
             pm2.start({
@@ -120,6 +140,18 @@ Meteor.methods({
                 args: params,
             }, function(err, apps) {
                 pm2.disconnect();
+=======
+        console.log("home: "+home);
+        Meteor.sleep(3000);
+        try {
+            pm2.start({
+                script: marketmakerBin, // path to MM binary
+                exec_mode: 'fork',
+                cwd: marketmakerDir, //set correct working dir for MM data
+                args: params, //stringified params
+            }, function(err, apps) {
+                pm2.disconnect(); // Disconnect from PM2
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
                 if (err) throw err;
                 else {
                     console.log("started MM");
@@ -140,12 +172,29 @@ Meteor.methods({
 
         Meteor.sleep(6000);
         try {
+<<<<<<< HEAD
             const result = HTTP.call('POST', 'http://127.0.0.1:7783', {
                 data: setparams
             });
             var userpass = JSON.parse(result.content).userpass;
 
             try {
+=======
+            console.log("ISSUING login call");
+            const result = HTTP.call('POST', 'http://127.0.0.1:7783', {
+                data: setparams
+            });
+
+            console.log("login result: " + result);
+            var userpass = JSON.parse(result.content).userpass;
+            console.log("userpass: " + userpass);
+
+
+            try {
+                console.log("set pass");
+                console.log(JSON.parse(result.content));
+
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
                 Userdata.insert({
                     key: "userpass",
                     userpass: JSON.parse(result.content).userpass,
@@ -188,6 +237,10 @@ Meteor.methods({
             throw new Meteor.Error(e);
         }
 
+<<<<<<< HEAD
+=======
+        console.log("adding electrum servers");
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
         const paramsKMD = {
             'userpass': Userdata.findOne({
                 key: "userpass"
@@ -268,13 +321,21 @@ Meteor.methods({
             'port': 10065
         };
 
+<<<<<<< HEAD
         const toSend = [paramsKMD, paramsBTC, paramsBTC2, paramsdICOT, paramsdICOT2, paramsKMD2, paramsLTC, paramsLTC2];
+=======
+        const toSend = [paramsKMD, paramsKMD2, paramsBTC, paramsBTC2, paramsdICOT, paramsdICOT2, paramsLTC, paramsLTC2];
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
 
         for (let i = 0; i < toSend.length; i++) {
                   try {
                       const result = HTTP.call('POST', 'http://127.0.0.1:7783', {
                           data: toSend[i]
                       });
+<<<<<<< HEAD
+=======
+                      //console.log(result);
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
                   } catch (e) {
                       throw new Meteor.Error(e);
                   }
@@ -283,10 +344,18 @@ Meteor.methods({
 
         if (Userdata.find().count() > 4) {
             Meteor.call('getbalance', 'KMD');
+<<<<<<< HEAD
             Meteor.call('getbalance', tokenconfig.shortcode);
             Meteor.call('getbalance', 'BTC');
             Meteor.call('getbalance', 'LTC');
         }
+=======
+            Meteor.call('getbalance', tokenconfig.dICOtoken.shortcode);
+            Meteor.call('getbalance', 'BTC');
+            Meteor.call('getbalance', 'LTC');
+        }
+        console.log("connected");
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
     },
     sendtoaddress(coin, address, amount) {
         var outputs = '[{' + address + ':' + Number(amount) / numcoin + '}]';
@@ -305,8 +374,14 @@ Meteor.methods({
             result = HTTP.call('POST', 'http://127.0.0.1:7783', {
                 data: sendparams
             });
+<<<<<<< HEAD
         } catch (e) {
             console.log("Error: " + e);
+=======
+            console.log(result);
+        } catch (e) {
+            console.log("Errror: " + e);
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
             throw new Meteor.Error("error", e);
         }
         const sendrawtx = {
@@ -321,6 +396,10 @@ Meteor.methods({
             const result = HTTP.call('POST', 'http://127.0.0.1:7783', {
                 data: sendrawtx
             });
+<<<<<<< HEAD
+=======
+            console.log(result);
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
             return result.content;
         } catch (e) {
             console.log(e);
@@ -681,7 +760,11 @@ Meteor.methods({
             'coin': coin,
             'address': Userdata.findOne({
                 coin: coin
+<<<<<<< HEAD
             }).smartaddress.toString()
+=======
+            }).smartaddress.toString() //hardcoded for now
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
         };
 
         try {
@@ -711,7 +794,13 @@ Meteor.methods({
             const result = HTTP.call('POST', 'http://127.0.0.1:7783', {
                 data: stopparams
             });
+<<<<<<< HEAD
             pm2.connect(function(err) {
+=======
+            console.log(JSON.parse(result.content));
+
+            pm2.connect(function(err) { //start up pm2 god
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
                 if (err) {
                     console.error(err);
                     process.exit(2);
@@ -726,7 +815,11 @@ Meteor.methods({
                     }
                 });
                 pm2.kill(function(err, apps) {
+<<<<<<< HEAD
                     pm2.disconnect();
+=======
+                    pm2.disconnect(); // Disconnect from PM2
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
                     if (err) throw err;
                     else {
                         console.log("stopped pm2");
@@ -740,6 +833,10 @@ Meteor.methods({
         }
     },
     checkswapstatus(requestid, quoteid) {
+<<<<<<< HEAD
+=======
+        console.log("call checkswapstatus");
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
         if (Userdata.findOne({
                 key: "userpass"
             })) {
@@ -754,10 +851,18 @@ Meteor.methods({
                     const result = HTTP.call('POST', 'http://127.0.0.1:7783', {
                         data: swaplist
                     });
+<<<<<<< HEAD
+=======
+                    console.log("checkswapstatus: " + result.content);
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
                     var swaps = JSON.parse(result.content).swaps;
                     const tempSwap = Tradedata.findOne({
                         key: "tempswap"
                     });
+<<<<<<< HEAD
+=======
+                    console.log('tempswap', tempSwap);
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
                     if (tempSwap) {
                         if (tempSwap.expiration * 1000 < Date.now()) {
                             Tradedata.remove({
@@ -816,6 +921,11 @@ Meteor.methods({
                         var swap = JSON.parse(result.content);
                         var alice = swap.aliceid.toString();
                         var uuid = swap.uuid;
+<<<<<<< HEAD
+=======
+
+                        console.log("SWAPELEM: " + result.content);
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
                         var step = 0;
                         if (Swapdata.findOne({
                                 uuid: uuid
@@ -823,6 +933,10 @@ Meteor.methods({
                             if (Swapdata.findOne({
                                     uuid: uuid
                                 }).bobpayment == "0000000000000000000000000000000000000000000000000000000000000000") {
+<<<<<<< HEAD
+=======
+                                console.log("bobpayment == 0");
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
                                 try {
                                     if (Swapdata.findOne({
                                             uuid: uuid
@@ -839,9 +953,21 @@ Meteor.methods({
                                         uuid: uuid
                                     }).finishtime);
                                     var matched = 0;
+<<<<<<< HEAD
                                     if (Swapdata.findOne({
                                             uuid: uuid
                                         }).finishtime === "Invalid Date" || new Date(swap.finishtime * 1000).toGMTString() === "Invalid Date") {
+=======
+                                    console.log(new Date(swap.finishtime * 1000).toGMTString());
+                                    console.log(Swapdata.findOne({
+                                        uuid: uuid
+                                    }).finishtime);
+
+                                    if (Swapdata.findOne({
+                                            uuid: uuid
+                                        }).finishtime === "Invalid Date" || new Date(swap.finishtime * 1000).toGMTString() === "Invalid Date") {
+                                        console.log("matched");
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
                                         matched = 1;
                                     }
                                     Swapdata.update({
@@ -850,6 +976,10 @@ Meteor.methods({
                                         $set: {
                                             requestid: swap.requestid,
                                             quoteid: swap.quoteid,
+<<<<<<< HEAD
+=======
+                                            //value: swap.values[0],
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
                                             status: "pending",
                                             finished: false,
                                             step: step,

@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 import { Userdata } from '../../api/userdata/userdata.js';
 import { Tradedata } from '../../api/tradedata/tradedata.js';
 import tokenconfig from '../../api/config/electrum.js';
+=======
+
+import { Userdata } from '../../api/userdata/userdata.js';
+import { Tradedata } from '../../api/tradedata/tradedata.js';
+import tokenconfig from '../../api/config/tokenconfig.js';
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
 
 Meteor.setInterval(function() {
     if(Userdata.find().count() > 4) {

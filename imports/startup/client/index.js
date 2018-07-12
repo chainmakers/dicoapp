@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+// Import client startup through a single index entry point
+
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
 import '/imports/desktop/sharedCollections';
 import './routes.js';
 import { Userdata } from '/imports/api/userdata/userdata.js';
@@ -13,3 +18,7 @@ if (Meteor.isDesktop) {
 
     Desktop.send('desktop', 'init');
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe

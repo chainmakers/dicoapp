@@ -22,7 +22,11 @@ let electrumServers = { //by default KMD, BTC and LTC supported
     },
     dICOtoken: {
         address: '0.0.0.0',
+<<<<<<< HEAD
         port: 00000,
+=======
+        port: 0,
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
         proto: 'tcp',
         txfee: 10000,
         coin: 'dICOtoken',
@@ -33,6 +37,7 @@ let electrumServers = { //by default KMD, BTC and LTC supported
     }
 };
 
+<<<<<<< HEAD
 let tokenconfig = { //custom token config
     dICOtoken: {
         name: 'dICO Token',
@@ -47,3 +52,6 @@ let tokenconfig = { //custom token config
 
 module.exports = electrumServers;
 module.exports = tokenconfig;
+=======
+module.exports = electrumServers;
+>>>>>>> 1e09c669345dd7cce715cb4bf0274ce161400cfe
