@@ -3,7 +3,7 @@
     <div class="wallet overview">
       <h2>Wallet Overview</h2>
       <p>Balances</p>
-      <p>{{balanceBTC}} BTC | {{balanceLTC}} LTC | {{balanceKMD}} KMD | {{balancedICOT}} {{dICOTName}} | </p>
+      <p>{{balanceBTC}} BTC | {{balanceLTC}} LTC | {{balanceKMD}} KMD | {{balancedICOT}} {{dICOTName}}</p>
     </div>
     <div class="wallet send">
       <h3>Send</h3>
@@ -30,25 +30,25 @@
     </div>
     <div class="wallet transactions">
       <h3>Last transactions</h3>
-
+      {{#if transactionsLength}}
         <table class="table table-bordered swaps">
-        <thead>
-        <tr>
-          <th>Coin</th>
-          <th>Blockheight</th>
-          <th>TX-ID</th>
-          <th>Amount</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        {{#each transactions}}
-          {{> transaction}}
-        {{/each}}
-        </tbody>
+          <thead>
+            <tr>
+              <th>Coin</th>
+              <th>Blockheight</th>
+              <th>Transaction ID</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each transactions}}
+              {{> transaction}}
+            {{/each}}
+          </tbody>
         </table>
-
-
+      {{else}}
+      <div class="margin-top-20"><br />Loading transactions history...<br /><br /></div>
+      {{/if}}
     </div>
   </div>
 
@@ -60,7 +60,7 @@
           <h4 class="modal-title">{{coinsString}} Deposit Address</h4>
         </div>
         <div class="modal-body text-center">
-            {{> QRCode text=(address) size="200px" }}
+          {{> QRCode text=(address) size="200px" }}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -72,10 +72,12 @@
 
 
 <template name="transaction">
-<tr>
-<td>{{coin}}</td>
-<td>{{height}}</td>
-<td>{{txid}}</td>
-<td>{{amount}}</td>
-</tr>
+  <tr>
+    <td>{{coin}}</td>
+    <td>{{height}}</td>
+    <td>
+      <a href="{{explorerLink(coin)}}/{{txid}}">{{txid}}</a>
+    </td>
+    <td>{{amount}}</td>
+  </tr>
 </template>
