@@ -18,12 +18,13 @@
     <br>
     <h4>For more information and technical assistance please follow the below links:</h4>
     <ul>
-        <li><a href="https://t.me/dicotoken" target="_blank">Telegram</a></li>
-        <li><a href="https://dicotoken.ocm/ " target="_blank">Website</a></li>
-        <li><a href="https://twitter.com/dicotoken " target="_blank">Twitter</a></li>
-        <li><a href="https://www.facebook.com/dicotoken/ " target="_blank">Facebook</a></li>
-        <li><a href="https://www.reddit.com/r/dicotoken/ " target="_blank">Reddit</a></li>
-        <li><a href="https://helpdesk.dicotoken.com/" target="_blank">Helpdesk</a></li>
+        {{#each getLinks}}
+          {{> links}}
+        {{/each}}
     </ul>
   </div>
+</template>
+
+<template name="links">
+<li><a href="{{url}}" target="_blank">{{title}}</a></li>
 </template>
