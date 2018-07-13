@@ -165,16 +165,16 @@ export default class Marketmaker {
                 price: Number(0) * numcoin,
                 createdAt: new Date()
             });
-            // await this.Tradedata.insert({
-            //     key: "eqlpriceLTC",
-            //     price: Number(0) * numcoin,
-            //     createdAt: new Date()
-            // });
-            // await this.Tradedata.insert({
-            //     key: "priceLTC",
-            //     price: Number(0) * numcoin,
-            //     createdAt: new Date()
-            // });
+            await this.Tradedata.insert({
+                key: "priceLTC",
+                price: Number(0) * numcoin,
+                createdAt: new Date()
+            });
+            await this.Tradedata.insert({
+                key: "priceBTC",
+                price: Number(0) * numcoin,
+                createdAt: new Date()
+            });
         }
 
         if (await this.Userdata.count() === 0) {
@@ -550,10 +550,10 @@ export default class Marketmaker {
             await this.getBalance(tokenconfig.dICOtoken.shortcode);
             await this.getBalance('KMD');
             await this.getBalance('BTC');
-            await this.getBalance('BTC');
+            await this.getBalance('LTC');
             await this.getPrice('KMD');
             await this.getPrice('LTC');
-            await this.getPrice('LTC');
+            await this.getPrice('BTC');
         }
         //console.log("connected");
     }
@@ -715,7 +715,7 @@ export default class Marketmaker {
             'userpass': userpass,
             'method': 'electrum',
             'coin': 'KMD',
-            'ipaddr': electrum2.cipig.net,
+            'ipaddr': 'electrum2.cipig.net',
             'port': 10001
         };
 
@@ -731,7 +731,7 @@ export default class Marketmaker {
             'userpass': userpass,
             'method': 'electrum',
             'coin': tokenconfig.dICOtoken.shortcode,
-            'ipaddr': electrumServers.dICOtoken.altserverList[0],
+            'ipaddr': electrumServers.dICOtoken.serverList[0],
             'port': electrumServers.dICOtoken.port
         };
 
@@ -742,7 +742,7 @@ export default class Marketmaker {
         //     'ipaddr': '46.4.87.18',
         //     'port': 10000
         // };
-        
+
         // const paramsZEC2 = {
         //     'userpass': userpass,
         //     'method': 'electrum',
@@ -756,7 +756,7 @@ export default class Marketmaker {
             'method': 'electrum',
             'coin': 'BTC',
             'ipaddr': 'electrum1.cipig.net',
-            'port': 10001
+            'port': 10000
         };
 
         const paramsBTC2 = {
@@ -764,7 +764,7 @@ export default class Marketmaker {
             'method': 'electrum',
             'coin': 'BTC',
             'ipaddr': 'electrum2.cipig.net',
-            'port': 10001
+            'port': 10000
         };
 
         const paramsLTC = {
@@ -774,7 +774,7 @@ export default class Marketmaker {
             'ipaddr': 'electrum1.cipig.net',
             'port': 10065
         };
-        
+
         const paramsLTC2 = {
             'userpass': userpass,
             'method': 'electrum',
