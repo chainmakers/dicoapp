@@ -35,7 +35,7 @@
           <thead>
             <tr>
               <th>Coin</th>
-              <th>Blockheight</th>
+              <th>Block height</th>
               <th>Transaction ID</th>
               <th>Amount</th>
             </tr>
@@ -47,7 +47,7 @@
           </tbody>
         </table>
       {{else}}
-      <div class="margin-top-20"><br />Loading transactions history...<br /><br /></div>
+      <div class="margin-top-20"><br />No history<br /><br /></div>
       {{/if}}
     </div>
   </div>
@@ -76,8 +76,14 @@
     <td>{{coin}}</td>
     <td>{{height}}</td>
     <td>
-      <a href="{{explorerLink(coin)}}/{{txid}}">{{txid}}</a>
+      <a href="{{explorerLink(coin)}}/{{txid}}" target="_blank">{{txid}}</a>
     </td>
-    <td>{{amount}}</td>
+    <td>
+      {{#if amountRender amount}}
+        {{amount}}
+      {{else}}
+        N/A
+      {{/if}}
+    </td>
   </tr>
 </template>

@@ -142,6 +142,14 @@ Template.registerHelper('transactionsLength', function(coin) {
     return false;
   }
 });
+Template.registerHelper('amountRender', function(amount) {
+  if (amount &&
+      amount > 0) {
+    return true;
+  } else {
+    return false;
+  }
+});
 
 Session.set("activeSendButton", true);
 Template.wallet.events({
