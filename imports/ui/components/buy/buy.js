@@ -81,7 +81,7 @@ Template.buy.helpers({
         return tokenconfig.dICOtoken.coin;
     },
     balanceBTC: function () {
-        return Userdata.findOne({ coin: "BTC" }) && parseFloat(Userdata.findOne({ coin: "BTC" }).balance / numcoin).toFixed(8);
+        return Userdata.findOne({ coin: "BTC" }) && parseFloat(Userdata.findOne({ coin: "BTC" }).balance / numcoin).toFixed(10);
     },
     address: function () {
         return Userdata.findOne({ coin: Session.get("currentcoin") }) && Userdata.findOne({ coin: Session.get("currentcoin") }).smartaddress.toString();
@@ -111,17 +111,17 @@ Template.buy.helpers({
         return Tradedata.findOne({ key: "priceKMD" }) && Tradedata.findOne({ key: "priceKMD" }).price / numcoin;
     },
     pricebtc: function () {
-        return Tradedata.findOne({ key: "priceBTC" }) && Tradedata.findOne({ key: "priceBTC" }).price / numcoin;
+        return Tradedata.findOne({ key: "priceBTC" }) && Tradedata.findOne({ key: "priceBTC" }).price / numcoin ? (Tradedata.findOne({ key: "priceBTC" }) && Tradedata.findOne({ key: "priceBTC" }).price / numcoin).toFixed(8) : 0;
     },
     priceltc: function () {
         return Tradedata.findOne({ key: "priceLTC" }) && Tradedata.findOne({ key: "priceLTC" }).price / numcoin;
     },
     ready: function () {
-        return Tradedata.findOne({ key: "priceKMD" }) && 
-        Tradedata.findOne({ key: "priceKMD" }).price / numcoin > 0 && 
-        Tradedata.findOne({ key: "priceBTC" }) && 
-        Tradedata.findOne({ key: "priceBTC" }).price / numcoin > 0 && 
-        Tradedata.findOne({ key: "priceLTC" }) && 
+        return Tradedata.findOne({ key: "priceKMD" }) &&
+        Tradedata.findOne({ key: "priceKMD" }).price / numcoin > 0 &&
+        Tradedata.findOne({ key: "priceBTC" }) &&
+        Tradedata.findOne({ key: "priceBTC" }).price / numcoin > 0 &&
+        Tradedata.findOne({ key: "priceLTC" }) &&
         Tradedata.findOne({ key: "priceLTC" }).price / numcoin > 0;
     },
     pricemongokmd: function () {
@@ -249,114 +249,156 @@ Template.buy.events({
             }
         }
 
-        if (Number(Userdata.findOne({
-            coin: "KMD"
-        }).balance) > ((amount / numcoin * Tradedata.findOne({
-            key: "priceKMD"
-        }).price / numcoin) + Number(0.00010000 * numcoin)) && amount > 0) {
-            //start unspent
-
-            if (Meteor.isDesktop) {
-                Session.set('buyInProgress', 'yes');
-                Desktop.fetch('marketmaker', 'listUnspent', 60000, 'KMD')
-                    .then(result => {
-                        if (result[0]) {
-                            handleResult('KMD', result[1]);
-                        } else {
-                            console.log(result[1]);
-                            swal("Oops!", result[1], "error");
-                            Session.set('buyInProgress', 'no');
-                        }
-                    })
-                    .catch(e => {
-                        console.log(e);
-                        Session.set('buyInProgress', 'no');
-                        swal("Oops!", e.toString(), "error");
-                    });
-            } else {
-                Meteor.call("listunspent", "KMD", function (error, result) {
-                    if (error) {
-                        // console.log(error);
-                        console.log(error.error);
-                        swal("Oops!", error.error, "error");
-                    } else {
-                        handleResult('KMD', result);
-                    }
-                });
-            }
-            //end unspent
-        } else if (Number(Userdata.findOne({
-            coin: "BTC"
-        }).balance) > ((amount / numcoin * Tradedata.findOne({
-            key: "priceBTC"
-        }).price / numcoin) + Number(0.00010000 * numcoin)) && amount > 0) {
-            //start unspent
-            if (Meteor.isDesktop) {
-                Session.set('buyInProgress', 'yes');
-                Desktop.fetch('marketmaker', 'listUnspent', 60000, 'BTC')
-                    .then(result => {
-                        if (result[0]) {
-                            handleResult('BTC', result[1]);
-                        } else {
-                            console.log(result[1]);
-                            swal("Oops!", result[1], "error");
-                            Session.set('buyInProgress', 'no');
-                        }
-                    })
-                    .catch(e => {
-                        console.log(e);
-                        swal("Oops!", e.toString(), "error");
-                        Session.set('buyInProgress', 'no');
-                    });
-            } else {
-                Meteor.call("listunspent", "BTC", function (error, result) {
-                    if (error) {
-                        // console.log(error);
-                        console.log(error.error);
-                        swal("Oops!", error.error, "error");
-                    } else {
-                        handleResult('BTC', result);
-                    }
-                });
-
-            }
-        } else if (Number(Userdata.findOne({
-                coin: "LTC"
+        if (template.find('.buywith').value === 'auto') {
+            if (Number(Userdata.findOne({
+                coin: "KMD"
             }).balance) > ((amount / numcoin * Tradedata.findOne({
-                key: "priceLTC"
+                key: "priceKMD"
             }).price / numcoin) + Number(0.00010000 * numcoin)) && amount > 0) {
-            //start unspent
-            if (Meteor.isDesktop) {
-                Session.set('buyInProgress', 'yes');
-                Desktop.fetch('marketmaker', 'listUnspent', 60000, 'LTC')
-                    .then(result => {
-                        if (result[0]) {
-                            handleResult('LTC', result[1]);
-                        } else {
-                            console.log(result[1]);
-                            swal("Oops!", result[1], "error");
+                //start unspent
+
+                if (Meteor.isDesktop) {
+                    Session.set('buyInProgress', 'yes');
+                    Desktop.fetch('marketmaker', 'listUnspent', 60000, 'KMD')
+                        .then(result => {
+                            if (result[0]) {
+                                handleResult('KMD', result[1]);
+                            } else {
+                                console.log(result[1]);
+                                swal("Oops!", result[1], "error");
+                                Session.set('buyInProgress', 'no');
+                            }
+                        })
+                        .catch(e => {
+                            console.log(e);
                             Session.set('buyInProgress', 'no');
+                            swal("Oops!", e.toString(), "error");
+                        });
+                } else {
+                    Meteor.call("listunspent", "KMD", function (error, result) {
+                        if (error) {
+                            // console.log(error);
+                            console.log(error.error);
+                            swal("Oops!", error.error, "error");
+                        } else {
+                            handleResult('KMD', result);
                         }
-                    })
-                    .catch(e => {
-                        console.log(e);
-                        swal("Oops!", e.toString(), "error");
-                        Session.set('buyInProgress', 'no');
                     });
-            } else {
-                Meteor.call("listunspent", "LTC", function (error, result) {
-                    if (error) {
-                        // console.log(error);
-                        console.log(error.error);
-                        swal("Oops!", error.error, "error");
-                    } else {
-                        handleResult('LTC', result);
-                    }
-                });
+                }
+                //end unspent
+            } else if (Number(Userdata.findOne({
+                coin: "BTC"
+            }).balance) > ((amount / numcoin * Tradedata.findOne({
+                key: "priceBTC"
+            }).price / numcoin) + Number(0.00010000 * numcoin)) && amount > 0) {
+                //start unspent
+                if (Meteor.isDesktop) {
+                    Session.set('buyInProgress', 'yes');
+                    Desktop.fetch('marketmaker', 'listUnspent', 60000, 'BTC')
+                        .then(result => {
+                            if (result[0]) {
+                                handleResult('BTC', result[1]);
+                            } else {
+                                console.log(result[1]);
+                                swal("Oops!", result[1], "error");
+                                Session.set('buyInProgress', 'no');
+                            }
+                        })
+                        .catch(e => {
+                            console.log(e);
+                            swal("Oops!", e.toString(), "error");
+                            Session.set('buyInProgress', 'no');
+                        });
+                } else {
+                    Meteor.call("listunspent", "BTC", function (error, result) {
+                        if (error) {
+                            // console.log(error);
+                            console.log(error.error);
+                            swal("Oops!", error.error, "error");
+                        } else {
+                            handleResult('BTC', result);
+                        }
+                    });
+
+                }
+            } else if (Number(Userdata.findOne({
+                    coin: "LTC"
+                }).balance) > ((amount / numcoin * Tradedata.findOne({
+                    key: "priceLTC"
+                }).price / numcoin) + Number(0.00010000 * numcoin)) && amount > 0) {
+                //start unspent
+                if (Meteor.isDesktop) {
+                    Session.set('buyInProgress', 'yes');
+                    Desktop.fetch('marketmaker', 'listUnspent', 60000, 'LTC')
+                        .then(result => {
+                            if (result[0]) {
+                                handleResult('LTC', result[1]);
+                            } else {
+                                console.log(result[1]);
+                                swal("Oops!", result[1], "error");
+                                Session.set('buyInProgress', 'no');
+                            }
+                        })
+                        .catch(e => {
+                            console.log(e);
+                            swal("Oops!", e.toString(), "error");
+                            Session.set('buyInProgress', 'no');
+                        });
+                } else {
+                    Meteor.call("listunspent", "LTC", function (error, result) {
+                        if (error) {
+                            // console.log(error);
+                            console.log(error.error);
+                            swal("Oops!", error.error, "error");
+                        } else {
+                            handleResult('LTC', result);
+                        }
+                    });
+                }
+             } else {
+                console.log("error");
+                swal("Oops!", "Not enough balance or wrong buy amount!", "error");
             }
-         } else {
-            console.log("error");
-            swal("Oops!", "Not enough balance or wrong buy amount!", "error");
+        } else {
+            const _coin = template.find('.buywith').value;
+
+            if (Number(Userdata.findOne({
+                coin: _coin
+            }).balance) > ((amount / numcoin * Tradedata.findOne({
+                key: "price" + _coin
+            }).price / numcoin) + Number(0.00010000 * numcoin)) && amount > 0) {
+                //start unspent
+
+                if (Meteor.isDesktop) {
+                    Session.set('buyInProgress', 'yes');
+                    Desktop.fetch('marketmaker', 'listUnspent', 60000, _coin)
+                        .then(result => {
+                            if (result[0]) {
+                                handleResult(_coin, result[1]);
+                            } else {
+                                console.log(result[1]);
+                                swal("Oops!", result[1], "error");
+                                Session.set('buyInProgress', 'no');
+                            }
+                        })
+                        .catch(e => {
+                            console.log(e);
+                            Session.set('buyInProgress', 'no');
+                            swal("Oops!", e.toString(), "error");
+                        });
+                } else {
+                    Meteor.call("listunspent", _coin, function (error, result) {
+                        if (error) {
+                            // console.log(error);
+                            console.log(error.error);
+                            swal("Oops!", error.error, "error");
+                        } else {
+                            handleResult(_coin, result);
+                        }
+                    });
+                }
+                //end unspent
+            }
         }
     }
 });

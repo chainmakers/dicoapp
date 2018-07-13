@@ -274,7 +274,7 @@ Meteor.methods({
             'ipaddr': 'electrum1.cipig.net',
             'port': 10065
         };
-        
+
         const paramsLTC2 = {
             'userpass': Userdata.findOne({
                 key: "userpass"
@@ -286,11 +286,11 @@ Meteor.methods({
         };
 
         const toSend = [
-            paramsKMD, 
-            paramsKMD2, 
-            paramsBTC, 
+            paramsKMD,
+            paramsKMD2,
+            paramsBTC,
             paramsBTC2,
-            paramsdICOT, 
+            paramsdICOT,
             paramsdICOT2,
             paramsLTC,
             paramsLTC2,
@@ -663,7 +663,8 @@ Meteor.methods({
                             coin: coin,
                             txid: transaction.tx_hash,
                             height: height,
-                            createdAt: new Date()
+                            createdAt: new Date(),
+                            amount: transaction.amount,
                         });
                     } else {
                         if (Transactions.findOne({
