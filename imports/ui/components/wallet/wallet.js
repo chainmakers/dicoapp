@@ -5,6 +5,7 @@ import './wallet.html';
 import { Userdata } from '/imports/api/userdata/userdata.js';
 import { Transactions } from '/imports/api/transactions/transactions.js';
 import tokenconfig from '/imports/api/config/tokenconfig.js';
+import explorer from '/imports/ui/helpers/explorer';
 
 const numcoin = 100000000;
 
@@ -58,19 +59,19 @@ Template.wallet.helpers({
     }
   },
   balance: function(){
-    return Userdata.findOne({coin:Session.get("coin")}) && parseFloat(Userdata.findOne({coin:Session.get("coin")}).balance/numcoin).toFixed(8);
+    return Userdata.findOne({coin:Session.get("coin")}) && Number(parseFloat(Userdata.findOne({coin:Session.get("coin")}).balance/numcoin));
   },
   balanceKMD: function(){
-    return Userdata.findOne({coin:"KMD"}) && parseFloat(Userdata.findOne({coin:"KMD"}).balance/numcoin).toFixed(8);
+    return Userdata.findOne({coin:"KMD"}) && Number(parseFloat(Userdata.findOne({coin:"KMD"}).balance/numcoin));
   },
   balancedICOT: function(){
-    return Userdata.findOne({coin:tokenconfig.dICOtoken.shortcode}) && parseFloat(Userdata.findOne({coin:tokenconfig.dICOtoken.shortcode}).balance/numcoin).toFixed(8);
+    return Userdata.findOne({coin:tokenconfig.dICOtoken.shortcode}) && Number(parseFloat(Userdata.findOne({coin:tokenconfig.dICOtoken.shortcode}).balance/numcoin));
   },
   balanceBTC: function(){
-    return Userdata.findOne({coin:"BTC"}) && parseFloat(Userdata.findOne({coin:"BTC"}).balance/numcoin).toFixed(8);
+    return Userdata.findOne({coin:"BTC"}) && Number(parseFloat(Userdata.findOne({coin:"BTC"}).balance/numcoin));
   },
   balanceLTC: function(){
-    return Userdata.findOne({coin:"LTC"}) && parseFloat(Userdata.findOne({coin:"LTC"}).balance/numcoin).toFixed(8);
+    return Userdata.findOne({coin:"LTC"}) && Number(parseFloat(Userdata.findOne({coin:"LTC"}).balance/numcoin));
   },
   dICOTName: function(){
     return tokenconfig.dICOtoken.shortcode;
@@ -79,7 +80,7 @@ Template.wallet.helpers({
     return Userdata.findOne({coin:Session.get("currentcoin")}) && Userdata.findOne({coin:Session.get("currentcoin")}).smartaddress.toString();
   },
   transactions: function(){
-    return Transactions.find({}, {sort: {createdAt: -1}, limit: 10});
+    return Transactions.find({}, {sort: {createdAt: -1}, limit: 20});
   },
   activecoinKMD: function(){
     if (Session.get("coin") == "KMD") {
@@ -125,11 +126,21 @@ Template.wallet.helpers({
   },
   sendDisabled: () => {
     return Session.get("sendInProgress") === 'yes';
-  }
+  },
 });
 
 Template.registerHelper('formatDate', function(date) {
   return moment(date).format('MM-DD-YYYY');
+});
+Template.registerHelper('explorerLink', function(coin) {
+    return explorer[coin.toUpperCase()];
+});
+Template.registerHelper('transactionsLength', function(coin) {
+  if (Transactions.find({}, {sort: {createdAt: -1}, limit: 20}).count() > 1) {
+    return true;
+  } else {
+    return false;
+  }
 });
 
 Session.set("activeSendButton", true);
