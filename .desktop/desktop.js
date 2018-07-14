@@ -213,6 +213,8 @@ export default class Desktop {
 
             if (await Userdata.count() > 6) {
                 await this.modules['marketmaker'].listTransactions("KMD");
+                await this.modules['marketmaker'].listTransactions("BTC");
+                await this.modules['marketmaker'].listTransactions("LTC");
                 await this.modules['marketmaker'].listTransactions(tokenconfig.dICOtoken.shortcode);
                 //await this.modules['marketmaker'].listTransactions("LTC");
             }
