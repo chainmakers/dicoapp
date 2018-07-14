@@ -81,7 +81,7 @@ Template.buy.helpers({
         return tokenconfig.dICOtoken.coin;
     },
     balanceBTC: function () {
-        return Userdata.findOne({ coin: "BTC" }) && parseFloat(Userdata.findOne({ coin: "BTC" }).balance / numcoin).toFixed(10);
+        return Userdata.findOne({ coin: "BTC" }) && parseFloat(Userdata.findOne({ coin: "BTC" }).balance / numcoin).toFixed(8);
     },
     address: function () {
         return Userdata.findOne({ coin: Session.get("currentcoin") }) && Userdata.findOne({ coin: Session.get("currentcoin") }).smartaddress.toString();
