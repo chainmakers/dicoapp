@@ -21,7 +21,7 @@ Template.navigation.events({
         Desktop.fetch('marketmaker', 'stopWallet', 60000)
             .then(([result, error]) => {
                 if (result) {
-                    swal("Thank you for using dICOApp", "Back to loginpage", "success");
+                    swal("Thank you for using the GLX dICO App", "Back to Log In page", "success");
                     FlowRouter.go('App.home');
                     Session.set("loading", false);
                 } else {
