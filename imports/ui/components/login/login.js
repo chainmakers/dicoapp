@@ -50,7 +50,7 @@ Template.login.events({
                    Session.set("loading", false);
                }
                else {
-                   swal("Success", "Welcome in the GLX dICO Wallet!", "success");
+                   swal("Success", "Welcome to the GLX dICO Wallet!", "success");
                    FlowRouter.go('App.wallet');
                    Session.set("loading", false);
                }

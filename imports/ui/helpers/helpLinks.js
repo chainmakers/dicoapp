@@ -1,9 +1,6 @@
 const helpLinks = [{
-  title: 'Slack',
-  url: 'http://slack.com',
-}, {
-  title: 'Website',
-  url: 'http://somewebsitehere',
+  title: 'GLX Token Chat Group Instruction Video',
+  url: 'https://glx.li/chat',
 }];
 
 export default helpLinks;

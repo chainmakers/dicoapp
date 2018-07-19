@@ -236,7 +236,7 @@ export default class Marketmaker {
 
         console.log("starting MM...")
         const startparams = {
-            'gui': 'dICOapp',
+            'gui': 'dICOapp-cm',
             'client': 1,
             'canbind': 0,
             'userhome': `${process.env.HOME}`,
