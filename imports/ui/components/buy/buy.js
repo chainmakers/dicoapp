@@ -180,6 +180,27 @@ Template.registerHelper('amountUSD', () => {
     }
 });
 Template.buy.events({
+    "keyup #bntnbuyamountusd": function (event, template) {
+        const amountUSD = Number(template.find(".bntnbuyamountusd").value);
+
+        if (amountUSD &&
+            amountUSD < 500000 &&
+            amountUSD > 0) {
+
+            const _prices = Session.get('remotePrices');
+            if (_prices &&
+                _prices[tokenconfig.dICOtoken.coin.toLowerCase()] &&
+                _prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd) {
+                template.find(".bntnbuyamount").value = Math.floor(amountUSD / _prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd);
+                amount = Math.floor(amountUSD / _prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd);
+
+                $('#amountUSD').html((amountUSD).toFixed(4));
+                $('#amountBTC').html(Number(amount) * Number(Tradedata.findOne({ key: "priceBTC" }) && Tradedata.findOne({ key: "priceBTC" }).price / numcoin));
+                $('#amountLTC').html(Number(amount) * Number(Tradedata.findOne({ key: "priceLTC" }) && Tradedata.findOne({ key: "priceLTC" }).price / numcoin));
+                $('#amountKMD').html(Number(amount) * Number(Tradedata.findOne({ key: "priceKMD" }) && Tradedata.findOne({ key: "priceKMD" }).price / numcoin));
+            }
+        }
+    },
     "click .bntnplus": function (event, template) {
         if (Number(template.find(".bntnbuyamount").value) < 500000) {
             if (Number(template.find(".bntnbuyamount").value) === 2) {
