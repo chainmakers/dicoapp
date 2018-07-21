@@ -5,7 +5,6 @@
 
 
   {{#unless ready}}<span><p>Syncing orderbook {{ > sloader }}</p></span> {{/unless}}
-  {{#if ready}}
 
   <div class="input-group buy">
 
@@ -24,14 +23,31 @@
         </span>
     </div>
   </div>
-  {{/if}}
 
-  <span>
-    <div style="padding-bottom: 8px">Price per {{dICOTName}}:</div>
-    <div style="padding-bottom: 5px">{{pricebtc}} <strong>BTC</strong></div>
-    <div style="padding-bottom: 5px">{{priceltc}} <strong>LTC</strong></div>
-    <div style="padding-bottom: 15px">{{pricekmd}} <strong>KMD</strong></div>
-  </span>
+  <div class="prices-block">
+    <div class="left">
+      <div style="padding-bottom: 8px">Price per {{dICOTName}}:</div>
+      <div style="padding-bottom: 5px">{{pricebtc}} <strong>BTC</strong></div>
+      <div style="padding-bottom: 5px">{{priceltc}} <strong>LTC</strong></div>
+      <div style="padding-bottom: 5px">{{pricekmd}} <strong>KMD</strong></div>
+      {{#if usdPrice}}
+        <div style="padding-bottom: 15px">{{usdPrice}} <strong>USD</strong></div>
+      {{/if}}
+    </div>
+    <div class="right">
+      <div class="buywith-container">
+        Total:
+        <div style="padding-top: 8px">
+          <div style="padding-bottom: 5px"><span id="amountBTC">{{amountBTC}}</span> <strong>BTC</strong></div>
+          <div style="padding-bottom: 5px"><span id="amountLTC">{{amountLTC}}</span> <strong>LTC</strong></div>
+          <div style="padding-bottom: 5px"><span id="amountKMD">{{amountKMD}}</span> <strong>KMD</strong></div>
+          {{#if usdPrice}}
+            <div style="padding-bottom: 5px"><span id="amountUSD">{{amountUSD}}</span> <strong>USD</strong></div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="buywith-container">
     Buy with

@@ -12,6 +12,7 @@ import '../animations/sloader.html';
 import '../animations/check.html';
 
 const numcoin = 100000000;
+let amount = 500;
 
 Template.buy.onCreated(function () {
     console.log("rendered");
@@ -151,22 +152,94 @@ Template.registerHelper('and', (a, b) => {
 Template.registerHelper('or', (a, b) => {
     return a || b;
 });
+Template.registerHelper('usdPrice', () => {
+    const _prices = Session.get('remotePrices');
 
+    if (_prices &&
+        _prices[tokenconfig.dICOtoken.coin.toLowerCase()] &&
+        _prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd) {
+        return Number(_prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd).toFixed(4);
+    }
+});
+Template.registerHelper('amountBTC', () => {
+    return Number(amount) * Number(Tradedata.findOne({ key: "priceBTC" }) && Tradedata.findOne({ key: "priceBTC" }).price / numcoin);
+});
+Template.registerHelper('amountKMD', () => {
+    return Number(amount) * Number(Tradedata.findOne({ key: "priceKMD" }) && Tradedata.findOne({ key: "priceKMD" }).price / numcoin);
+});
+Template.registerHelper('amountLTC', () => {
+    return Number(amount) * Number(Tradedata.findOne({ key: "priceLTC" }) && Tradedata.findOne({ key: "priceLTC" }).price / numcoin);
+});
+Template.registerHelper('amountUSD', () => {
+    const _prices = Session.get('remotePrices');
+
+    if (_prices &&
+        _prices[tokenconfig.dICOtoken.coin.toLowerCase()] &&
+        _prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd) {
+        return (Number(amount) * Number(_prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd)).toFixed(4);
+    }
+});
 Template.buy.events({
     "click .bntnplus": function (event, template) {
         if (Number(template.find(".bntnbuyamount").value) < 500000) {
             if (Number(template.find(".bntnbuyamount").value) === 2) {
                 template.find(".bntnbuyamount").value = 500;
+                amount = 500;
+
+                Number(amount) * Number(Tradedata.findOne({ key: "priceBTC" }) && Tradedata.findOne({ key: "priceBTC" }).price / numcoin)
+                $('#amountBTC').html(Number(amount) * Number(Tradedata.findOne({ key: "priceBTC" }) && Tradedata.findOne({ key: "priceBTC" }).price / numcoin));
+                $('#amountLTC').html(Number(amount) * Number(Tradedata.findOne({ key: "priceLTC" }) && Tradedata.findOne({ key: "priceLTC" }).price / numcoin));
+                $('#amountKMD').html(Number(amount) * Number(Tradedata.findOne({ key: "priceKMD" }) && Tradedata.findOne({ key: "priceKMD" }).price / numcoin));
+
+                const _prices = Session.get('remotePrices');
+                if (_prices &&
+                    _prices[tokenconfig.dICOtoken.coin.toLowerCase()] &&
+                    _prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd) {
+                    $('#amountUSD').html((Number(amount) * Number(_prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd)).toFixed(4));
+                }
             } else {
                 template.find(".bntnbuyamount").value = Number(template.find(".bntnbuyamount").value) + 500;
+                amount = Number(template.find(".bntnbuyamount").value) + 500;
+                $('#amountBTC').html(Number(amount) * Number(Tradedata.findOne({ key: "priceBTC" }) && Tradedata.findOne({ key: "priceBTC" }).price / numcoin));
+                $('#amountLTC').html(Number(amount) * Number(Tradedata.findOne({ key: "priceLTC" }) && Tradedata.findOne({ key: "priceLTC" }).price / numcoin));
+                $('#amountKMD').html(Number(amount) * Number(Tradedata.findOne({ key: "priceKMD" }) && Tradedata.findOne({ key: "priceKMD" }).price / numcoin));
+
+                const _prices = Session.get('remotePrices');
+                if (_prices &&
+                    _prices[tokenconfig.dICOtoken.coin.toLowerCase()] &&
+                    _prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd) {
+                    $('#amountUSD').html((Number(amount) * Number(_prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd)).toFixed(4));
+                }
             }
         }
     },
     "click .bntnminus": function (event, template) {
         if (Number(template.find(".bntnbuyamount").value) > 2 && Number(template.find(".bntnbuyamount").value) != 500) {
             template.find(".bntnbuyamount").value = Number(template.find(".bntnbuyamount").value) - 500;
+            amount = Number(template.find(".bntnbuyamount").value) - 500;
+            $('#amountBTC').html(Number(amount) * Number(Tradedata.findOne({ key: "priceBTC" }) && Tradedata.findOne({ key: "priceBTC" }).price / numcoin));
+            $('#amountLTC').html(Number(amount) * Number(Tradedata.findOne({ key: "priceLTC" }) && Tradedata.findOne({ key: "priceLTC" }).price / numcoin));
+            $('#amountKMD').html(Number(amount) * Number(Tradedata.findOne({ key: "priceKMD" }) && Tradedata.findOne({ key: "priceKMD" }).price / numcoin));
+
+            const _prices = Session.get('remotePrices');
+            if (_prices &&
+                _prices[tokenconfig.dICOtoken.coin.toLowerCase()] &&
+                _prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd) {
+                $('#amountUSD').html((Number(amount) * Number(_prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd)).toFixed(4));
+            }
         } else if (Number(template.find(".bntnbuyamount").value).toFixed(8) == 0.00000000 || Number(template.find(".bntnbuyamount").value) === 500) {
             template.find(".bntnbuyamount").value = 2;
+            amount = 2;
+            $('#amountBTC').html(Number(amount) * Number(Tradedata.findOne({ key: "priceBTC" }) && Tradedata.findOne({ key: "priceBTC" }).price / numcoin));
+            $('#amountLTC').html(Number(amount) * Number(Tradedata.findOne({ key: "priceLTC" }) && Tradedata.findOne({ key: "priceLTC" }).price / numcoin));
+            $('#amountKMD').html(Number(amount) * Number(Tradedata.findOne({ key: "priceKMD" }) && Tradedata.findOne({ key: "priceKMD" }).price / numcoin));
+
+            const _prices = Session.get('remotePrices');
+            if (_prices &&
+                _prices[tokenconfig.dICOtoken.coin.toLowerCase()] &&
+                _prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd) {
+                $('#amountUSD').html((Number(amount) * Number(_prices[tokenconfig.dICOtoken.coin.toLowerCase()].usd)).toFixed(4));
+            }
         }
     },
     "click .buybloc": function (event, template) {

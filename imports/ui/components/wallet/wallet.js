@@ -15,6 +15,15 @@ Template.wallet.onCreated(function () {
       Meteor.subscribe('transactions.all');
   }
   Session.set("currentcoin", "BTC");
+
+  Meteor.call("getPrices", function (error, result) {
+      if (error) {
+          console.warn('getPrices error', error);
+      } else {
+          console.warn('getPrices init', result);
+          Session.set("remotePrices", result);
+      }
+  });
 });
 
 Template.wallet.onRendered(function() {

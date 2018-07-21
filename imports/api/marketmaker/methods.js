@@ -1007,6 +1007,25 @@ Meteor.methods({
             return e;
         }
     },
+    // src: atomicexplorer.com
+    getPrices() {
+        let result = null;
+        try {
+            result = HTTP.call('GET', 'https://www.atomicexplorer.com/api/ticker', {});
+
+            result = JSON.parse(result.content);
+
+            if (result &&
+                result.msg === 'success') {
+                return result.result;
+            } else {
+                return false;
+            }
+        } catch (e) {
+            console.log("Errror: " + e);
+            throw new Meteor.Error("error", e);
+        }
+    },
     hello() {
         console.log("hello");
     }
