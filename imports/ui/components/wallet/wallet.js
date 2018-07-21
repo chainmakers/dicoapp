@@ -20,7 +20,7 @@ Template.wallet.onCreated(function () {
       if (error) {
           console.warn('getPrices error', error);
       } else {
-          console.warn('getPrices init', result);
+          // console.warn('getPrices init', result);
           Session.set("remotePrices", result);
       }
   });
