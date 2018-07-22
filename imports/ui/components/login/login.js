@@ -32,7 +32,7 @@ Template.login.events({
            Desktop.fetch('marketmaker', 'startWallet', 60000, pass)
                .then(([result, error]) => {
                    if (result) {
-                       swal("Success", "Welcome in the dICO Wallet!", "success");
+                       swal("Success", "Welcome to the GLX dICO Wallet!", "success");
                        FlowRouter.go('App.wallet');
                        Session.set("loading", false);
                    } else {
