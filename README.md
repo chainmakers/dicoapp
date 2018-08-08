@@ -88,7 +88,7 @@ Please replace the logos and icons in `.desktop/assets` and `public/img` with yo
 Install deps and meteor-desktop:
 ```
 meteor npm install
-meteor npm install --save-dev meteor-desktop
+meteor npm install --save-dev meteor-desktop@1.6.0
 ```
 and make sure you have all deps and the dicoAPP desktop module installed in your app root directory.
 
@@ -96,5 +96,7 @@ and make sure you have all deps and the dicoAPP desktop module installed in your
 
 
 `npm run desktop -- build-installer --win`
+
 `npm run desktop -- build-installer --linux`
+
 `npm run desktop -- build-installer --osx`
